@@ -15,7 +15,8 @@ if (!defined('ABSPATH')) {
 // Move out-of-stock products to the end of the product listings
 add_action('woocommerce_product_query', 'move_out_of_stock_products_to_end');
 function move_out_of_stock_products_to_end($q) {
-    if (!is_admin() && $q->is_main_query()) {
+    // Check if it's not an admin page, it's the main query, and it's not the checkout or cart pages
+    if (!is_admin() && $q->is_main_query() && !is_checkout() && !is_cart()) {
         // Filter products with either 'instock' or 'outofstock' status
         $meta_query = $q->get('meta_query');
 
